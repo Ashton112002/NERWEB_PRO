@@ -65,7 +65,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      'https://nanay-estrella-res.netlify.app',
+      'https://nanayestrella-restaurant.netlify.app',
       'http://localhost:3000'
     ],
     method: ['POST', 'GET'],
