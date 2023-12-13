@@ -1,24 +1,24 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-import React, { Fragment, createContext, useReducer } from 'react';
-import Layout from '../layout';
-import Slider from './Slider';
-import ProductCategory from './ProductCategory';
-import { homeState, homeReducer } from './HomeContext';
-import location from '../../../Assets/location.png';
-import con1 from '../../../Assets/icon1.png';
-import con2 from '../../../Assets/icon2.png';
-import con3 from '../../../Assets/icon3.png';
-import con4 from '../../../Assets/icon4.png';
-import con5 from '../../../Assets/icon5.png';
-import con6 from '../../../Assets/icon6.png';
-import SingleProduct from './SingleProduct';
+import React, { Fragment, createContext, useReducer } from "react";
+import Layout from "../layout";
+import Slider from "./Slider";
+import ProductCategory from "./ProductCategory";
+import { homeState, homeReducer } from "./HomeContext";
+import location from "../../../Assets/location.png";
+import con1 from "../../../Assets/icon1.png";
+import con2 from "../../../Assets/icon2.png";
+import con3 from "../../../Assets/icon3.png";
+import con4 from "../../../Assets/icon4.png";
+import con5 from "../../../Assets/icon5.png";
+import con6 from "../../../Assets/icon6.png";
+import SingleProduct from "./SingleProduct";
 // import Chat from "./Chat";
 export const HomeContext = createContext();
 
 const HomeComponent = () => {
   const handleVisitButtonClick = () => {
     // Open the specified URL in a new tab
-    window.open('https://maps.app.goo.gl/HAmxu3Xbu3aqztmw7', '_blank');
+    window.open("https://maps.app.goo.gl/HAmxu3Xbu3aqztmw7", "_blank");
   };
   return (
     <Fragment>
@@ -71,14 +71,12 @@ const HomeComponent = () => {
           </div>
         </div>
         <div className="w-1/4 md:w-1/5 pt-[13%] bg-white t-50 b-0 h-100 flex flex-col ml-[35%] md:-ml-[3%]">
-          
-
           <div className="flex flex-col mt-[20px]">
             <button
               type="submit"
               className="mb-10 bg-[#C07936] w-40 h-12 hover:bg-[#679641] cursor-pointer m-auto text-white text-md font-medium text-center py-1 rounded-full mt-4 transition ease-in-out delay-150 bg-[#C07936] hover:-translate-y-1 hover:scale-110 hover:bg-[#679641] duration-300"
             >
-             Book Events Now!!!
+              Book Events Now!!!
             </button>
           </div>
         </div>
@@ -216,7 +214,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%] mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold" href="/">
+                        <a class="text-black font-semibold " href="/">
                           ONLINE REVIEWS
                         </a>
                       </h1>
@@ -236,7 +234,6 @@ const HomeComponent = () => {
         </h1>
       </div>
       <div className="w-full h-screen -mt-3 flex items-start flex flex-wrap -mx-1 lg:-mx-4">
-      
         <div className="relative flex flex-col w-full md:w-2/3 lg:w-2/3">
           <div className="flex-1">
             <img
@@ -259,19 +256,19 @@ const HomeComponent = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-1/3 pt-[13%] ml-[10%] md:-ml-[0%] bg-white t-50 b-0  h-100 flex flex-col  ">
-          <h1 className="text-3xl font-bold">Simple Way</h1>
-          <h1 className="text-3xl font-bold">To Visit Our Place</h1>
-          <p className="py-5">
+        <div className="md:w-1/3 pt-16 ml-10 md:ml-0 bg-white h-full flex flex-col">
+          <h1 className="text-3xl font-bold mb-2">Simple Way</h1>
+          <h1 className="text-3xl font-bold mb-5">To Visit Our Place</h1>
+          <p className="pb-5">
             Nanay Estrella's Restaurant 5.0 (2) W3M6+WFP, Clarin, Bohol <br />
             Address Located in: BIBLE BAPTIST CHURCH - SAGBAYAN
           </p>
 
-          <div className="flex flex-col mr-[500px] mt-[20px]">
+          <div className="flex flex-col">
             <button
               type="submit"
               onClick={handleVisitButtonClick}
-              className="mb-10 bg-[#C07936] w-36 h-12 hover:bg-[#679641] cursor-pointer m-auto text-white text-md font-medium text-center py-1 rounded-full mt-4 transition ease-in-out delay-150 bg-[#C07936] hover:-translate-y-1 hover:scale-110 hover:bg-[#679641] duration-300"
+              className="bg-[#C07936] w-36 h-12 hover:bg-[#679641] cursor-pointer text-white text-md font-medium text-center py-1 rounded-full mb-10 mx-auto transition ease-in-out duration-300 transform hover:-translate-y-1 hover:scale-110"
             >
               Visit Now!!!
             </button>
@@ -282,7 +279,7 @@ const HomeComponent = () => {
   );
 };
 
-const Home = props => {
+const Home = (props) => {
   const [data, dispatch] = useReducer(homeReducer, homeState);
   return (
     <Fragment>

@@ -96,8 +96,8 @@ const Slider = (props) => {
                       style={{ backgroundColor: "#679641" }}
                       type="submit"
                       className="px-3 py-3 w-32 md:w-[160px] cursor-pointer text-white text-sm md:text-lg lg:text-lg xl:text-lg font-medium text-center rounded-full transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-[#679641] duration-300"
-                     onClick={(e) => history.push("/Menu")
-                        >
+                      onClick={(e) => history.push("/Menu")}
+                    >
                       Make Order
                     </button>
                   </div>

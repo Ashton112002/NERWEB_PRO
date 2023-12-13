@@ -44,7 +44,7 @@ const Footer = (props) => {
               9:00AM-5:00PM
             </h1>
           </ul>
-          <ul className="text-center sm:text-start -mb-5 mt-5 md:mt-5">
+          <ul className="text-center sm:text-start -mb-5 mt-5 md:mt-0">
             <h1 className="font-large -mb-5">USEFUL LINKS</h1>
             <h1 className="font-light -mb-5" style={{ color: "#0e1c03" }}>
               For more Recent Events.
@@ -84,7 +84,7 @@ const Footer = (props) => {
           </ul>
 
           <ul className="text-center sm:text-start -mb-5">
-            <h1 className="font-large -mb-5 mt-5 md:mt-5">CONTACT US</h1>
+            <h1 className="font-large -mb-5 mt-5 md:mt-0">CONTACT US</h1>
             <div className="flex items-center -mb-5 ml-28 md:ml-0 md:-mb-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
