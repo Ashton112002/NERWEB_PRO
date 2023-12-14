@@ -2,6 +2,7 @@
 import React, { Fragment, createContext, useReducer } from "react";
 import Layout from "../layout";
 import Slider from "./Slider";
+import { useHistory } from "react-router-dom";
 import ProductCategory from "./ProductCategory";
 import { homeState, homeReducer } from "./HomeContext";
 import location from "../../../Assets/location.png";
@@ -16,6 +17,7 @@ import SingleProduct from "./SingleProduct";
 export const HomeContext = createContext();
 
 const HomeComponent = () => {
+  const history = useHistory();
   const handleVisitButtonClick = () => {
     // Open the specified URL in a new tab
     window.open("https://maps.app.goo.gl/HAmxu3Xbu3aqztmw7", "_blank");
@@ -75,7 +77,8 @@ const HomeComponent = () => {
             <button
               type="submit"
               className="mb-10 bg-[#C07936] w-40 h-12 hover:bg-[#679641] cursor-pointer m-auto text-white text-md font-medium text-center py-1 rounded-full mt-4 transition ease-in-out delay-150 bg-[#C07936] hover:-translate-y-1 hover:scale-110 hover:bg-[#679641] duration-300"
-            >
+              onClick={(e) => history.push("/appointment")}
+           >
               Book Events Now!!!
             </button>
           </div>
@@ -90,7 +93,7 @@ const HomeComponent = () => {
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey  rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/appointment")}>
                 <div class="relative group">
                   <img
                     src={con1}
@@ -100,7 +103,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold" href="/">
+                        <a class="text-black font-semibold" onClick={(e) => history.push("/appointment")}>
                           BOOK APPOINTMENT
                         </a>
                       </h1>
@@ -112,7 +115,7 @@ const HomeComponent = () => {
           </div>
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/Menu")}>
                 <div class="relative group">
                   <img
                     src={con2}
@@ -124,7 +127,7 @@ const HomeComponent = () => {
                       <h1 class="text-lg text-center">
                         <a
                           class="text-black font-semibold font-semibold"
-                          href="/"
+                          onClick={(e) => history.push("/Menu")}
                         >
                           ORDER ONLINE
                         </a>
@@ -137,7 +140,7 @@ const HomeComponent = () => {
           </div>
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/Menu")}>
                 <div class="relative group">
                   <img
                     src={con3}
@@ -147,7 +150,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold" href="/">
+                        <a class="text-black font-semibold" onClick={(e) => history.push("/Menu")}>
                           FOOD QUALITY
                         </a>
                       </h1>
@@ -159,7 +162,7 @@ const HomeComponent = () => {
           </div>
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/Menu")}>
                 <div class="relative group">
                   <img
                     src={con4}
@@ -169,7 +172,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold" href="/">
+                        <a class="text-black font-semibold" onClick={(e) => history.push("/Menu")}>
                           SUPER TASTE
                         </a>
                       </h1>
@@ -181,7 +184,7 @@ const HomeComponent = () => {
           </div>
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/Event")}>
                 <div class="relative group">
                   <img
                     src={con5}
@@ -191,7 +194,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold" href="/">
+                        <a class="text-black font-semibold" onClick={(e) => history.push("/Event")}>
                           PICTURESQUE SCENERY
                         </a>
                       </h1>
@@ -203,7 +206,7 @@ const HomeComponent = () => {
           </div>
           <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
             <article class="overflow-hidden border border-grey rounded-lg shadow-lg">
-              <a href="/">
+              <a onClick={(e) => history.push("/Menu")}>
                 <div class="relative group">
                   <img
                     src={con6}
@@ -214,7 +217,7 @@ const HomeComponent = () => {
                   <header class="flex items-center justify-center md:p-4 mb-[10%] md:mb-[0%] mb-[10%] md:mb-[0%]">
                     <div class="border border-none bg-[#8dbd66] p-3 rounded-xl">
                       <h1 class="text-lg text-center">
-                        <a class="text-black font-semibold " href="/">
+                        <a class="text-black font-semibold " onClick={(e) => history.push("/Menu")}>
                           ONLINE REVIEWS
                         </a>
                       </h1>
