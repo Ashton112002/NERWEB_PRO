@@ -186,7 +186,7 @@ export const CheckoutComponent = props => {
                     }}
                     className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
                     style={{ background: '#679641' }}>
-                    Pay now
+                    Place Order Now
                   </div>
                 </div>
                 <ToastContainer />
