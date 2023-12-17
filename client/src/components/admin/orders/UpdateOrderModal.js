@@ -1,6 +1,11 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import { OrderContext } from "./index";
 import { getAllOrder, editCategory } from "./FetchApi";
+import emailjs from '@emailjs/browser';
+
+let EMAIL_JS_PUBLIC_KEY = "evpSlYjFpzdjBJOBO";
+let EMAIL_JS_SERVICE_KEY = "service_8nfck6w";
+let EMAIL_JS_TEMPLATE_KEY = "template_h2kqmlv";
 
 const UpdateOrderModal = (props) => {
   const { data, dispatch } = useContext(OrderContext);
@@ -8,6 +13,20 @@ const UpdateOrderModal = (props) => {
   const [status, setStatus] = useState("");
 
   const [oId, setOid] = useState("");
+
+  let EMAIL_JS_PUBLIC_KEY = "evpSlYjFpzdjBJOBO";
+  let EMAIL_JS_SERVICE_KEY = "service_8nfck6w";
+  let EMAIL_JS_TEMPLATE_KEY = "template_h2kqmlv";
+
+  const sendEmail = (status, userEmail) => {
+    emailjs.init(EMAIL_JS_PUBLIC_KEY);
+    var params = {
+      from_name: "Nanay Estralla",
+      message: "Your order has been" + status,
+      to_email: userEmail
+    }
+    emailjs.send(EMAIL_JS_SERVICE_KEY, EMAIL_JS_TEMPLATE_KEY, params);
+  }
 
   useEffect(() => {
     setOid(data.updateOrderModal.oId);
@@ -28,10 +47,13 @@ const UpdateOrderModal = (props) => {
   const submitForm = async () => {
     dispatch({ type: "loading", payload: true });
     let responseData = await editCategory(oId, status);
+    console.log("Order Status: ", status);
+    console.log("Current Email: ", localStorage.getItem('currentRowUserEmail'));
+    let rrr = localStorage.getItem('currentRowUserEmail');
+    sendEmail(status, rrr);
     if (responseData.error) {
       dispatch({ type: "loading", payload: false });
     } else if (responseData.success) {
-      console.log(responseData.success);
       dispatch({ type: "updateOrderModalClose" });
       fetchData();
       dispatch({ type: "loading", payload: false });

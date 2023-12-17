@@ -369,15 +369,7 @@ const ProductDetailsSection = (props) => {
               {sProduct.pQuantity !== 0 ? (
                 
                 <Fragment>
-                  {layoutData.inCart !== null &&
-                  layoutData.inCart.includes(sProduct._id) === true ? (
-                    <div
-                      style={{ background: "#679641" }}
-                      className={`px-4 py-2 text-white text-center cursor-not-allowed uppercase opacity-75`}
-                    >
-                      In cart
-                    </div>
-                  ) : (
+                  {  
                     <div
                       onClick={(e) =>
                         addToCart(
@@ -392,14 +384,14 @@ const ProductDetailsSection = (props) => {
                         )
                       }
                       style={{ 
-                        background: loginValidation ? '#679641' : '#ccc',
-                        cursor: loginValidation ? 'pointer' : 'not-allowed'
+                        background: '#679641',
+                        cursor: 'pointer'
                       }}
                       className={`px-4 py-2 text-white text-center cursor-pointer uppercase`}
                     >
                       Add to cart
                     </div>
-                  )}
+                  }
                 </Fragment>
               ) : (
                 <Fragment>
@@ -407,8 +399,7 @@ const ProductDetailsSection = (props) => {
                   layoutData.inCart.includes(sProduct._id) === true ? (
                     <div
                       style={{ background: "#679641" }}
-                      className={`px-4 py-2 text-white text-center cursor-not-allowed uppercase opacity-75`}
-                      disabled={!loginValidation}
+                      className={`px-4 py-2 text-white text-center uppercase opacity-75`}
                     >
                       In cart
                     </div>

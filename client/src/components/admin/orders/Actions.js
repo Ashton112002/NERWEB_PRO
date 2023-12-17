@@ -16,9 +16,11 @@ export const fetchData = async dispatch => {
 };
 
 /* This method call the editmodal & dispatch category context */
-export const editOrderReq = (oId, type, status, dispatch) => {
+export const editOrderReq = (oId, type, status, email, dispatch) => {
   if (type) {
     console.log('click update');
+    localStorage.setItem('currentRowUserEmail', email);
+    console.log("Test Email", localStorage.getItem('currentRowUserEmail'));
     dispatch({ type: 'updateOrderModalOpen', oId: oId, status: status });
   }
 };

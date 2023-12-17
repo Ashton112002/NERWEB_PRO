@@ -54,7 +54,7 @@ const AllReviews = (props) => {
                 <div className="mb-6 md:mb-8 flex flex-col md:flex-row md:items-start">
                   <img
                     className="mx-2 w-16 h-16 rounded-full"
-                    src="https://secure.gravatar.com/avatar/676d90a1574e9d3ebf98dd36f7adad60?s=60&d=mm&r=g"
+                    src={item.user.userImage}
                     alt="pic"
                   />
                   <div className="mx-2 flex justify-between w-full">

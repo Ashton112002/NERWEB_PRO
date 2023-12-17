@@ -2,10 +2,11 @@ import React from 'react'
 import Footer from "../partials/Footer";
 import Image from "../../../Assets/bg2.png";
 import { Navber } from '../partials';
+
 const AboutUs = () => {
   return (
     <div>
-      <Navber/>
+    <Navber/>
     <div className="w-full h-screen relative mb-[30%] md:mb-[0%]">
       <div className="w-full h-screen flex flex-col md:flex-row ">
         <div className="w-full md:w-1/2 relative flex flex-col mt-28 md:mt-16">

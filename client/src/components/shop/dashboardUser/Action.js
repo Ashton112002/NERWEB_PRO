@@ -50,13 +50,6 @@ export const fetchOrderByUser = async dispatch => {
 };
 
 export const updatePersonalInformationAction = async (dispatch, fData) => {
-  // const formData = {
-  //   uId: fData.id,
-  //   name: fData.name,
-  //   phoneNumber: fData.phone,
-  //   address: fData.address,
-  //   uImage: fData.uImage
-  // };
   dispatch({ type: 'loading', payload: true });
   try {
     let formData = new FormData();

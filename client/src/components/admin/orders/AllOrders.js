@@ -60,8 +60,8 @@ const AllCategory = props => {
                   <CategoryTable
                     key={i}
                     order={item}
-                    editOrder={(oId, type, status) =>
-                      editOrderReq(oId, type, status, dispatch)
+                    editOrder={(oId, type, status, email) =>
+                      editOrderReq(oId, type, status, email, dispatch)
                     }
                   />
                 );
@@ -87,10 +87,8 @@ const AllCategory = props => {
 /* Single Category Component */
 const CategoryTable = ({ order, editOrder }) => {
 const { dispatch } = useContext(OrderContext);
-console.log("ORDERSSS", order)
   const getSampleData = () => {
     const data = order.allProduct.map(p => {
-     
       return {
         description: p.id.pName,
         quantity: p.quantitiy,
@@ -140,7 +138,7 @@ console.log("ORDERSSS", order)
           {order.allProduct
             // .filter(({ _id, name }) => _id && name)
             .map((product, i) => {
-              console.log({ product: product.id.pImages });
+              // console.log({ product: product.id.pImages });
               return (
                 <span className="block flex items-center space-x-2" key={i}>
                   <img
@@ -203,7 +201,7 @@ console.log("ORDERSSS", order)
         </td>
         <td className="p-2 flex items-center justify-center">
           <span
-            onClick={e => editOrder(order._id, true, order.status)}
+            onClick={e => editOrder(order._id, true, order.status, order.user.email)}
             className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1">
             <svg
               className="w-6 h-6 fill-current text-green-500"

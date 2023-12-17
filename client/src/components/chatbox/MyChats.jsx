@@ -124,7 +124,7 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}>
                 <Text>
-                <img src={`${chat.users[0].userRole == 1 ? chat.users[1].userImage : chat.users[0].userImage}`} alt='Image' style={{width:'50px', borderRadius: '50%', border: '1px solid #fff', display: 'inline-flex', marginRight: '10px'}}/>
+                <img src={`${chat.users[0].userRole == 1 ? chat.users[0].userImage : chat.users[1].userImage}`} alt='Image' style={{width:'50px', borderRadius: '50%', border: '1px solid #fff', display: 'inline-flex', marginRight: '10px'}}/>
                 {!chat.isGroupChat ? loggedUser && getSender(loggedUser, chat.users) : chat.chatName}
                 </Text>
               </Box>

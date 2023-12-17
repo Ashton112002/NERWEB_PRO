@@ -23,11 +23,19 @@ const Navber = props => {
       ? dispatch({ type: 'hamburgerToggle', payload: false })
       : dispatch({ type: 'hamburgerToggle', payload: true });
 
-  const loginModalOpen = () =>
-    data.loginSignupModal
-      ? dispatch({ type: 'loginSignupModalToggle', payload: false })
-      : dispatch({ type: 'loginSignupModalToggle', payload: true });
-
+  const loginModalOpen = () => {
+    if (data.loginSignupModal) {
+      console.log('Closing login/signup modal');
+      dispatch({ type: 'loginSignupModalToggle', payload: false });
+    } else {
+      console.log('Opening login/signup modal');
+      const currentRoute = location.pathname;
+      if (currentRoute === '/' || currentRoute === '/Menu' || currentRoute === '/Contact') {
+        dispatch({ type: 'loginSignupModalToggle', payload: true });
+      }
+    }
+  };      
+ 
   const cartModalOpen = () =>
     data.cartModal
       ? dispatch({ type: 'cartModalToggle', payload: false })
@@ -42,7 +50,6 @@ const Navber = props => {
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Fragment>
       {/* Navber Section */}
@@ -69,12 +76,6 @@ const Navber = props => {
             >
               About
             </span>
-            {/* <span
-              className="hover:bg-gray-200 px-4 py-3 rounded-lg font-medium tracking-widest hover:text-gray-800 cursor-pointer"
-              onClick={(e) => history.push("/services")}
-            >
-              Services
-            </span> */}
             <span
               className="hover:bg-gray-200 px-4 py-3 rounded-lg font-medium tracking-widest hover:text-gray-800 cursor-pointer"
               onClick={(e) => history.push("/Menu")}
@@ -451,46 +452,36 @@ const Navber = props => {
           </div>
         </div>
         <div
-          className={
-            data.navberHamburger && data.navberHamburger
-              ? "px-1 pb-2 md:pb-0 md:px-10 lg:hidden"
-              : "hidden px-1 pb-2 md:pb-0 md:px-10 lg:hidden"
-          }
+          className={!data.navberHamburger ? "px-1 pb-2 md:pb-0 md:px-10 lg:hidden" : "hidden px-1 pb-2 md:pb-0 md:px-10 lg:hidden"}
         >
-          <div className="col-span-1 flex flex-col text-gray-600">
+          <div className={`col-span-1 flex flex-col text-gray-600`}>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/")}
+              onClick={e => {navberToggleOpen(); history.push("/");}}
             >
               Home
             </span>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/aboutUs")}
+              onClick={e => {navberToggleOpen(); history.push("aboutUs");}}
             >
               About
             </span>
-            {/* <span
-              className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/services")}
-            >
-              Services
-            </span> */}
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/Menu")}
+              onClick={e => {navberToggleOpen(); history.push("/Menu");}}
             >
               Menu
             </span>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/Event")}
+              onClick={e => {navberToggleOpen(); history.push("Event");}}
             >
               Events
             </span>
             <span
               className="font-medium text-lg tracking-widest hover:text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer"
-              onClick={(e) => history.push("/Contact")}
+              onClick={e => {navberToggleOpen(); history.push("/Contact");}}
             >
               Contact
             </span>

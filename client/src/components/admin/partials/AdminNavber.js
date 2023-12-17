@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-const AdminNavber = props => {
+const AdminNavber = ({ setSidebarVisible }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -12,6 +12,10 @@ const AdminNavber = props => {
     localStorage.removeItem('wishList');
     window.location.href = '/';
   };
+  const showMenu = () => {
+    setSidebarVisible((prevValue) => !prevValue);
+    console.log("Hamburger is clicked!");
+  }
 
   return (
     <Fragment>
@@ -46,7 +50,7 @@ const AdminNavber = props => {
         {/* Small Screen Show */}
         <div className="lg:hidden flex items-center">
           <svg
-          
+            onClick={showMenu}
             id="hamburgerBtn"
             className="lg:hidden w-8 h-8 cursor-pointer text-gray-600"
             fill="none"
@@ -113,10 +117,12 @@ const AdminNavber = props => {
             </span> */}
           </div>
           {/* Logout Button Dropdown */}
+          {console.log()}
           <div
             className="userDropdownBtn hover:bg-gray-200 px-2 py-2 rounded-lg relative"
             title="Logout">
-            <svg
+            <img src="https://secure.gravatar.com/avatar/676d90a1574e9d3ebf98dd36f7adad60?s=60&d=mm&r=g" alt="profile" style={{width: "50%", borderRadius: "50%", margin:"0px auto"}} />
+            {/* <svg
               className="cursor-pointer w-8 h-8 text-gray-600 hover:text-gray-800"
               fill="none"
               stroke="currentColor"
@@ -128,7 +134,7 @@ const AdminNavber = props => {
                 strokeWidth={2}
                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
-            </svg>
+            </svg> */}
             <div className="userDropdown absolute right-0 mt-1 bg-gray-200 rounded">
               <li className="flex flex-col text-gray-700">
                 <span

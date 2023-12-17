@@ -1,16 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-
-const AdminSidebar = props => {
+const AdminSidebar = ({ isSidebarVisible }) => {
+  
   const location = useLocation();
   const history = useHistory();
-
+  // console.log('Sidebar visibility:', isSidebarVisible);
   return (
     <Fragment>
       <div
-        style={{ boxShadow: '1px 1px 8px 0.2px #aaaaaa' }}
+        style={{ boxShadow: '1px 1px 8px 0.2px #aaaaaa', 
+                 transition: "all 1s ease-in-out"
+                }}
         id="sidebar"
-        className="hidden md:block sticky top-0 left-0 h-screen md:w-3/12 lg:w-2/12 sidebarShadow bg-white text-black-600">
+        className={`md:block sticky top-0 left-0 h-screen md:w-3/12 lg:w-2/12 sidebarShadow bg-white text-black-600 ${isSidebarVisible ? '' : 'hidden'}`}>
         {/* <div
           onClick={e => history.push('/admin/messages')}
           className={`${
