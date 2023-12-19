@@ -51,17 +51,64 @@ export const fetchOrderByUser = async dispatch => {
 
 export const updatePersonalInformationAction = async (dispatch, fData) => {
   dispatch({ type: 'loading', payload: true });
-  try {
-    let formData = new FormData();
-    for (const file of fData.uImage) {
-      formData.append('uImage', file);
-    }
-    /* Most important part for uploading multiple image  */
-    formData.append('uId', fData.id);
-    formData.append('name', fData.name);
-    formData.append('phoneNumber', fData.phone);
-    formData.append('address', fData.address);
 
+
+  const resizeImage = (img, maxWidth, maxHeight) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    let width = img.width;
+    let height = img.height;
+    if (width > height) {
+      if (width > maxWidth) {
+        height *= maxWidth / width;
+        width = maxWidth;
+      }
+    } else {
+      if (height > maxHeight) {
+        width *= maxHeight / height;
+        height = maxHeight;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL("image/jpeg"); // Adjust format as needed
+  };
+
+  const processImage = async (file, maxWidth, maxHeight) => {
+    return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob) || !(file instanceof File)) {
+        reject(new Error("Invalid file object"));
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const resizedBase64String = resizeImage(img, maxWidth, maxHeight);
+          resolve(resizedBase64String);
+        };
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  
+  
+  try {
+    let base64String = await processImage(fData.selectedFile, 150, 150);
+
+    const formData = {
+      uId: fData.id,
+      name: fData.name,
+      phoneNumber: fData.phone,
+      address: fData.address,
+      uImage: base64String
+    }
     let responseData = await updatePersonalInformationFetch(formData);
     setTimeout(() => {
       if (responseData && responseData.success) {

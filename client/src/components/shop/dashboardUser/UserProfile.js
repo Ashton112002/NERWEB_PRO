@@ -2,6 +2,10 @@ import React, { Fragment, useContext, useState, useEffect } from 'react';
 import Layout from './Layout';
 import { DashboardUserContext } from './Layout';
 import { updatePersonalInformationAction } from './Action';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const apiURL = process.env.REACT_APP_API_URL;
 const ProfileComponent = () => {
   const { data, dispatch } = useContext(DashboardUserContext);
@@ -16,6 +20,22 @@ const ProfileComponent = () => {
     success: false,
     userImage: ''
   });
+  const handleFileChange = (e) => {
+    // Use only the first file if you don't support multiple files
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFdata({
+          ...fData,
+          userImage: reader.result,
+          selectedFile: selectedFile,
+        });
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
 
   useEffect(() => {
     setFdata({
@@ -25,13 +45,38 @@ const ProfileComponent = () => {
       email: userDetails.email,
       phone: userDetails.phoneNumber,
       address: userDetails.address,
-      userImage: userDetails.userImage
+      userImage: userDetails.userImage || null,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDetails]);
 
   const handleSubmit = () => {
+    if (!fData.phone) {
+      toast.error('Phone Number is required', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      });
+      return;
+    } else if (!fData.address){
+      toast.error('Address is required', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      });
+      return;
+    }
     updatePersonalInformationAction(dispatch, fData);
   };
 
@@ -96,14 +141,7 @@ const ProfileComponent = () => {
               <div class="relative z-0 w-full mb-5 group">
                 <label htmlFor="image">Profile Picture</label>
                 <input
-                  onChange={e =>
-                    setFdata({
-                      ...fData,
-                      error: false,
-                      success: false,
-                      uImage: [...e.target.files]
-                    })
-                  }
+                  onChange={handleFileChange}
                   type="file"
                   accept=".jpg, .jpeg, .png"
                   className="px-4 py-2 border focus:outline-none"
@@ -114,7 +152,7 @@ const ProfileComponent = () => {
               <div class="relative z-0 w-full mb-5 group">
                 <img
                   className="w-20 h-20 object-cover object-center"
-                  src={`${fData.userImage}`}
+                  src={fData.userImage}
                   alt="pic"
                 />
               </div>
@@ -139,6 +177,7 @@ const ProfileComponent = () => {
                 type="text"
                 id="address"
                 className="border px-4 py-2 w-full focus:outline-none"
+                required
               />
             </div>
             <div
@@ -150,6 +189,7 @@ const ProfileComponent = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Fragment>
   );
 };

@@ -1,47 +1,6 @@
 const userModel = require('../models/users');
 const bcrypt = require('bcryptjs');
 
-
-const resizeImage = (img, maxWidth, maxHeight) => {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  let width = img.width;
-  let height = img.height;
-  if (width > height) {
-    if (width > maxWidth) {
-      height *= maxWidth / width;
-      width = maxWidth;
-    }
-  } else {
-    if (height > maxHeight) {
-      width *= maxHeight / height;
-      height = maxHeight;
-    }
-  }
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(img, 0, 0, width, height);
-  return canvas.toDataURL("image/jpeg"); // Adjust format as needed
-};
-
-const processImage = async (file, maxWidth, maxHeight) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.src = event.target.result;
-      img.onload = () => {
-        const resizedBase64String = resizeImage(img, maxWidth, maxHeight);
-        resolve(resizedBase64String);
-      };
-    };
-    reader.onerror = (error) => {
-      reject(error);
-    };
-    reader.readAsDataURL(file);
-  });
-};
-
 class User {
   async getAllUser(req, res) {
     try {
@@ -66,7 +25,7 @@ class User {
       try {
         let User = await userModel
           .findById(uId)
-          .select('name email phoneNumber userImage updatedAt createdAt');
+          .select('name email phoneNumber userImage updatedAt createdAt address');
         if (User) {
           return res.json({ User });
         }
@@ -110,10 +69,7 @@ class User {
   }
   
   async postEditUser(req, res) {
-    let { uId, name, phoneNumber, address } = req.body;
-    let uImage = req.files;
-    let base64Image = await processImage(uImage, 150, 150);
-
+    let { uId, name, phoneNumber, address, uImage } = req.body;
     if (!uId || !name || !phoneNumber || !address) {
       return res.json({ message: 'All filled must be required' });
     } else {
@@ -122,12 +78,11 @@ class User {
         phoneNumber: phoneNumber,
         updatedAt: Date.now(),
         address: address,
-        userImage: base64Image
+        userImage: uImage
       });
       currentUser.exec((err, result) => {
         if (err) console.log(err);
         return res.json({ success: 'User updated successfully' });
-        
       });
     }
   }

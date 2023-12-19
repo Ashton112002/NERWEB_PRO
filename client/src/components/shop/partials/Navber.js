@@ -6,6 +6,7 @@ import logo from '../../../Assets/logo.png';
 import { logout } from './Action';
 import { LayoutContext } from '../index';
 import { isAdmin, fetchUser } from '../auth/fetchApi';
+import { useMediaQuery } from 'react-responsive';
 const apiURL = process.env.REACT_APP_API_URL;
 
 const user = localStorage.getItem('jwt')
@@ -17,11 +18,11 @@ const Navber = props => {
   const [user, setUser] = useState({});
 
   const { data, dispatch } = useContext(LayoutContext);
-
-  const navberToggleOpen = () =>
-    data.navberHamburger
-      ? dispatch({ type: 'hamburgerToggle', payload: false })
-      : dispatch({ type: 'hamburgerToggle', payload: true });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const navberToggleOpen = () => {
+    dispatch({ type: 'hamburgerToggle', payload: !data.navberHamburger });
+  }
+  const isNavbarVisible = !data.navberHamburger || !isMobile;
 
   const loginModalOpen = () => {
     if (data.loginSignupModal) {
@@ -142,10 +143,6 @@ const Navber = props => {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
               </svg>
-              {/* <span className="absolute top-0 ml-6 mt-1 bg-yellow-700 rounded px-1 text-white text-xs hover:text-gray-200 font-semibold">
-                1
-                {data.cartProduct !== null ? data.cartProduct.length : 0}
-              </span> */}
             </div>
             {localStorage.getItem('jwt') ? (
               <Fragment>
@@ -452,7 +449,7 @@ const Navber = props => {
           </div>
         </div>
         <div
-          className={!data.navberHamburger ? "px-1 pb-2 md:pb-0 md:px-10 lg:hidden" : "hidden px-1 pb-2 md:pb-0 md:px-10 lg:hidden"}
+          className={isNavbarVisible ? "hidden px-1 pb-2 md:pb-0 md:px-10 lg:hidden" : "px-1 pb-2 md:pb-0 md:px-10 lg:hidden"}
         >
           <div className={`col-span-1 flex flex-col text-gray-600`}>
             <span

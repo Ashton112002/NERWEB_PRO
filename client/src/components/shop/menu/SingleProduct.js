@@ -67,7 +67,8 @@ const SingleProduct = (props) => {
                   onClick={(e) => history.push(`/products/${item._id}`)}
                   className="w-full object-cover object-center cursor-pointer"
                   src={`${apiURL}/uploads/products/${item.pImages[0]}`}
-                  alt=""
+                  alt="Image"
+                  style={{height:"250px"}}
                 />
                 <div className="flex items-center justify-between mt-2">
                   <div className="text-gray-600 font-medium truncate">

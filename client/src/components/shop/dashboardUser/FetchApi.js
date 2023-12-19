@@ -29,6 +29,7 @@ export const getOrderByUser = async (uId) => {
 };
 
 export const updatePassword = async (formData) => {
+  console.log("Update Pass", formData);
   try {
     let res = await axios.post(`${apiURL}/api/user/change-password`, formData);
     return res.data;
