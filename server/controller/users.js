@@ -37,7 +37,7 @@ class User {
 
   async postAddUser(req, res) {
     let { allProduct, user, amount, transactionId, address, phone } = req.body;
-    let dpImage = req.files;
+    console.log(req.body);
     if (
       !allProduct ||
       !user ||
@@ -70,6 +70,7 @@ class User {
   
   async postEditUser(req, res) {
     let { uId, name, phoneNumber, address, uImage } = req.body;
+    console.log(req.body);
     if (!uId || !name || !phoneNumber || !address) {
       return res.json({ message: 'All filled must be required' });
     } else {

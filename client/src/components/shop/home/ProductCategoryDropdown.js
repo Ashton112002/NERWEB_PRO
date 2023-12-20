@@ -28,7 +28,8 @@ const CategoryList = () => {
   };
 
   return (
-    <div className={`${data.categoryListDropdown ? "" : "hidden"} my-4`}>
+    // <div className={`${data.categoryListDropdown ? "" : "hidden"} my-4`}>
+    <div className="hidden my-4">
       <hr />
       <div className="py-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {categories && categories.length > 0 ? (
@@ -42,8 +43,8 @@ const CategoryList = () => {
                   className="col-span-1 m-2 flex flex-col items-center justify-center space-y-2 cursor-pointer rounded-xl shodow-xl border-2 bg-slate-200 border"
                 >
                   <img
-                    src={`${apiURL}/uploads/categories/${item.cImage}`}
-                    alt="pic"
+                    src={`${item.cImage}`}
+                    alt="Image"
                   />
                   <div className="font-medium">{item.cName}</div>
                 </div>

@@ -116,17 +116,7 @@ const ProductDetailsSection = (props) => {
               className={`${
                 count === 0 ? "" : "opacity-25"
               } cursor-pointer w-20 h-20 object-cover object-center`}
-              src={`${apiURL}/uploads/products/${sProduct.pImages[0]}`}
-              alt="pic"
-            />
-            <img
-              onClick={(e) =>
-                slideImage("increase", 1, count, setCount, pImages)
-              }
-              className={`${
-                count === 1 ? "" : "opacity-25"
-              } cursor-pointer w-20 h-20 object-cover object-center`}
-              src={`${apiURL}/uploads/products/${sProduct.pImages[1]}`}
+              src={`${sProduct.pImage}`}
               alt="pic"
             />
           </div>
@@ -134,11 +124,11 @@ const ProductDetailsSection = (props) => {
             <div className="relative">
               <img
                 className="w-full"
-                src={`${apiURL}/uploads/products/${sProduct.pImages[count]}`}
+                src={`${sProduct.pImage}`}
                 alt="Pic"
               />
               <div className="absolute inset-0 flex justify-between items-center mb-4">
-                <svg
+                {/* <svg
                   onClick={(e) =>
                     slideImage("increase", null, count, setCount, pImages)
                   }
@@ -154,8 +144,8 @@ const ProductDetailsSection = (props) => {
                     strokeWidth={2}
                     d="M15 19l-7-7 7-7"
                   />
-                </svg>
-                <svg
+                </svg> */}
+                {/* <svg
                   onClick={(e) =>
                     slideImage("increase", null, count, setCount, pImages)
                   }
@@ -171,7 +161,7 @@ const ProductDetailsSection = (props) => {
                     strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
-                </svg>
+                </svg> */}
               </div>
             </div>
           </div>

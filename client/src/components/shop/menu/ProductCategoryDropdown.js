@@ -42,7 +42,7 @@ const CategoryList = () => {
                   className="col-span-1 m-2 flex flex-col items-center justify-center space-y-2 cursor-pointer rounded-xl shodow-xl border-2 bg-slate-200 border"
                 >
                   <img
-                    src={`${apiURL}/uploads/categories/${item.cImage}`}
+                    src={`${item.cImage}`}
                     alt="pic"
                   />
                   <div className="font-medium">{item.cName}</div>

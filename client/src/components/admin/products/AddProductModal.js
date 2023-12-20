@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useState, useEffect } from "react";
 import { ProductContext } from "./index";
 import { createProduct, getAllProduct } from "./FetchApi";
 import { getAllCategory } from "../categories/FetchApi";
+import { FaDailymotion } from "react-icons/fa";
 
 const AddProductDetail = ({ categories }) => {
   const { data, dispatch } = useContext(ProductContext);
@@ -34,20 +35,72 @@ const AddProductDetail = ({ categories }) => {
       }
     }, 1000);
   };
+  const resizeImage = (img, maxWidth, maxHeight) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    let width = img.width;
+    let height = img.height;
+    if (width > height) {
+      if (width > maxWidth) {
+        height *= maxWidth / width;
+        width = maxWidth;
+      }
+    } else {
+      if (height > maxHeight) {
+        width *= maxHeight / height;
+        height = maxHeight;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL("image/jpeg"); // Adjust format as needed
+  };
+
+  const processImage = async (file, maxWidth, maxHeight) => {
+    return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob) || !(file instanceof File)) {
+        reject(new Error("Invalid file object"));
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const resizedBase64String = resizeImage(img, maxWidth, maxHeight);
+          resolve(resizedBase64String);
+        };
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      try {
+        const base64String = await processImage(selectedFile, 150, 150);
+        console.log("Base 64 String", base64String);
+        setFdata((prevData) => ({
+          ...prevData,
+          pImage: base64String,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   const submitForm = async (e) => {
     e.preventDefault();
     e.target.reset();
-
-    if (!fData.pImage) {
-      setFdata({ ...fData, error: "Please upload at least 2 image" });
-      setTimeout(() => {
-        setFdata({ ...fData, error: false });
-      }, 2000);
-    }
-
     try {
       let responseData = await createProduct(fData);
+      console.log("Data: " , fData);
       if (responseData.success) {
         fetchData();
         setFdata({
@@ -81,14 +134,13 @@ const AddProductDetail = ({ categories }) => {
       } else if (responseData.error) {
         setFdata({ ...fData, success: false, error: responseData.error });
         setTimeout(() => {
-          return setFdata({ ...fData, error: false, success: false });
+          setFdata({ ...fData, error: false, success: false });
         }, 2000);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <Fragment>
       {/* Black Overlay */}
@@ -195,21 +247,12 @@ const AddProductDetail = ({ categories }) => {
             {/* Most Important part for uploading multiple image */}
             <div className="flex flex-col mt-4">
               <label htmlFor="image">Product Images *</label>
-              <span className="text-gray-600 text-xs">Must need 2 images</span>
               <input
-                onChange={(e) =>
-                  setFdata({
-                    ...fData,
-                    error: false,
-                    success: false,
-                    pImage: [...e.target.files],
-                  })
-                }
+                onChange={handleFileChange}
+                name="productImage"
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 className="px-4 py-2 border focus:outline-none"
-                id="image"
-                multiple
               />
             </div>
             {/* Most Important part for uploading multiple image */}

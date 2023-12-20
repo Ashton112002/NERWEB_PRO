@@ -4,28 +4,28 @@ const path = require("path");
 
 class Product {
   // Delete Image from uploads -> products folder
-  static deleteImages(images, mode) {
-    var basePath =
-      path.resolve(__dirname + "../../") + "/public/uploads/products/";
-    console.log(basePath);
-    for (var i = 0; i < images.length; i++) {
-      let filePath = "";
-      if (mode == "file") {
-        filePath = basePath + `${images[i].filename}`;
-      } else {
-        filePath = basePath + `${images[i]}`;
-      }
-      console.log(filePath);
-      if (fs.existsSync(filePath)) {
-        console.log("Exists image");
-      }
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          return err;
-        }
-      });
-    }
-  }
+  // static deleteImages(images, mode) {
+  //   var basePath =
+  //     path.resolve(__dirname + "../../") + "/public/uploads/products/";
+  //   console.log(basePath);
+  //   for (var i = 0; i < images.length; i++) {
+  //     let filePath = "";
+  //     if (mode == "file") {
+  //       filePath = basePath + `${images[i].filename}`;
+  //     } else {
+  //       filePath = basePath + `${images[i]}`;
+  //     }
+  //     console.log(filePath);
+  //     if (fs.existsSync(filePath)) {
+  //       console.log("Exists image");
+  //     }
+  //     fs.unlink(filePath, (err) => {
+  //       if (err) {
+  //         return err;
+  //       }
+  //     });
+  //   }
+  // }
 
   async getAllProduct(req, res) {
     try {
@@ -42,41 +42,37 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus } =
-      req.body;
-    let images = req.files;
+    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus, pImage } = req.body;
+    console.log(req.body)
     // Validation
-    if (
-      !pName |
-      !pDescription |
-      !pPrice |
-      !pQuantity |
-      !pCategory |
-      !pOffer |
-      !pStatus
-    ) {
-      Product.deleteImages(images, "file");
-      return res.json({ error: "All filled must be required" });
-    }
-    // Validate Name and description
-    else if (pName.length > 255 || pDescription.length > 3000) {
-      Product.deleteImages(images, "file");
+    // if (
+    //     !pName || 
+    //     !pDescription || 
+    //     !pPrice || 
+    //     !pQuantity || 
+    //     !pCategory || 
+    //     !pOffer || 
+    //     !pStatus 
+    //   ) 
+    // {
+    //   return res.json({ error: "All filled must be required" });
+    // }
+    // // Validate Name and description
+    // else 
+    if (pName.length > 255 || pDescription.length > 3000) {
+      // Product.deleteImages(images, "file");
       return res.json({
         error: "Name 255 & Description must not be 3000 charecter long",
       });
-    }
-    // Validate Images
-    else if (images.length !== 2) {
-      Product.deleteImages(images, "file");
-      return res.json({ error: "Must need to provide 2 images" });
-    } else {
+    } 
+    else {
       try {
-        let allImages = [];
-        for (const img of images) {
-          allImages.push(img.filename);
-        }
+        // let allImages = [];
+        // for (const img of images) {
+        //   allImages.push(img.filename);
+        // }
         let newProduct = new productModel({
-          pImages: allImages,
+          pImage,
           pName,
           pDescription,
           pPrice,
@@ -85,7 +81,9 @@ class Product {
           pOffer,
           pStatus,
         });
+        console.log("New Product", newProduct);
         let save = await newProduct.save();
+        console.log("Save", save);
         if (save) {
           return res.json({ success: "Product created successfully" });
         }
@@ -130,7 +128,7 @@ class Product {
     }
     // Validate Update Images
     else if (editImages && editImages.length == 1) {
-      Product.deleteImages(editImages, "file");
+      // Product.deleteImages(editImages, "file");
       return res.json({ error: "Must need to provide 2 images" });
     } else {
       let editData = {
@@ -148,7 +146,7 @@ class Product {
           allEditImages.push(img.filename);
         }
         editData = { ...editData, pImages: allEditImages };
-        Product.deleteImages(pImages.split(","), "string");
+        // Product.deleteImages(pImages.split(","), "string");
       }
       try {
         let editProduct = productModel.findByIdAndUpdate(pId, editData);
@@ -172,7 +170,7 @@ class Product {
         let deleteProduct = await productModel.findByIdAndDelete(pId);
         if (deleteProduct) {
           // Delete Image from uploads -> products folder
-          Product.deleteImages(deleteProductObj.pImages, "string");
+          // Product.deleteImages(deleteProductObj.pImages, "string");
           return res.json({ success: "Product deleted successfully" });
         }
       } catch (err) {
