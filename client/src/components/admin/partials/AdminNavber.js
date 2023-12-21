@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const AdminNavber = ({ setSidebarVisible }) => {
@@ -10,12 +10,14 @@ const AdminNavber = ({ setSidebarVisible }) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('cart');
     localStorage.removeItem('wishList');
+    localStorage.clear();
     window.location.href = '/';
   };
   const showMenu = () => {
     setSidebarVisible((prevValue) => !prevValue);
     console.log("Hamburger is clicked!");
   }
+
 
   return (
     <Fragment>
@@ -121,7 +123,7 @@ const AdminNavber = ({ setSidebarVisible }) => {
           <div
             className="userDropdownBtn hover:bg-gray-200 px-2 py-2 rounded-lg relative"
             title="Logout">
-            <img src="https://secure.gravatar.com/avatar/676d90a1574e9d3ebf98dd36f7adad60?s=60&d=mm&r=g" alt="profile" style={{width: "50%", borderRadius: "50%", margin:"0px auto"}} />
+            <img src={localStorage.getItem('Image')} alt="profile" style={{width: "2.5rem", borderRadius: "50%", margin:"0px auto"}} />
             {/* <svg
               className="cursor-pointer w-8 h-8 text-gray-600 hover:text-gray-800"
               fill="none"

@@ -103,7 +103,7 @@ class Product {
       pCategory,
       pOffer,
       pStatus,
-      pImages,
+      pImage,
     } = req.body;
     let editImages = req.files;
 
@@ -125,11 +125,6 @@ class Product {
       return res.json({
         error: "Name 255 & Description must not be 3000 character long",
       });
-    }
-    // Validate Update Images
-    else if (editImages && editImages.length == 1) {
-      // Product.deleteImages(editImages, "file");
-      return res.json({ error: "Must need to provide 2 images" });
     } else {
       let editData = {
         pName,
@@ -139,15 +134,8 @@ class Product {
         pCategory,
         pOffer,
         pStatus,
+        pImage
       };
-      if (editImages.length == 2) {
-        let allEditImages = [];
-        for (const img of editImages) {
-          allEditImages.push(img.filename);
-        }
-        editData = { ...editData, pImages: allEditImages };
-        // Product.deleteImages(pImages.split(","), "string");
-      }
       try {
         let editProduct = productModel.findByIdAndUpdate(pId, editData);
         editProduct.exec((err) => {

@@ -17,8 +17,8 @@ const EditProductModal = (props) => {
     pId: "",
     pName: "",
     pDescription: "",
-    pImages: null,
-    pEditImages: null,
+    pImage: null,
+    pEditImage: null,
     pStatus: "",
     pCategory: "",
     pQuantity: "",
@@ -27,7 +27,6 @@ const EditProductModal = (props) => {
     error: false,
     success: false,
   });
-
   useEffect(() => {
     fetchCategoryData();
   }, []);
@@ -44,7 +43,7 @@ const EditProductModal = (props) => {
       pId: data.editProductModal.pId,
       pName: data.editProductModal.pName,
       pDescription: data.editProductModal.pDescription,
-      pImages: data.editProductModal.pImages,
+      pImage: data.editProductModal.pImage,
       pStatus: data.editProductModal.pStatus,
       pCategory: data.editProductModal.pCategory,
       pQuantity: data.editProductModal.pQuantity,
@@ -62,10 +61,68 @@ const EditProductModal = (props) => {
       });
     }
   };
+  const resizeImage = (img, maxWidth, maxHeight) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    let width = img.width;
+    let height = img.height;
+    if (width > height) {
+      if (width > maxWidth) {
+        height *= maxWidth / width;
+        width = maxWidth;
+      }
+    } else {
+      if (height > maxHeight) {
+        width *= maxHeight / height;
+        height = maxHeight;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL("image/jpeg"); // Adjust format as needed
+  };
+
+  const processImage = async (file, maxWidth, maxHeight) => {
+    return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob) || !(file instanceof File)) {
+        reject(new Error("Invalid file object"));
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const resizedBase64String = resizeImage(img, maxWidth, maxHeight);
+          resolve(resizedBase64String);
+        };
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  const handleEditImage = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      try {
+        const base64String = await processImage(selectedFile, 150, 150);
+        setEditformdata((editformData) => ({
+          ...editformData,
+          pImage: base64String,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
   const submitForm = async (e) => {
     e.preventDefault();
-    if (!editformData.pEditImages) {
+    if (!editformData.pEditImage) {
       console.log("Image Not upload=============", editformData);
     } else {
       console.log("Image uploading");
@@ -202,39 +259,22 @@ const EditProductModal = (props) => {
             </div>
             {/* Most Important part for uploading multiple image */}
             <div className="flex flex-col mt-4">
-              <label htmlFor="image">Product Images *</label>
-              {editformData.pImages ? (
-                <div className="flex space-x-1">
-                  <img
-                    className="h-16 w-16 object-cover"
-                    src={`${apiURL}/uploads/products/${editformData.pImages[0]}`}
-                    alt="productImage"
-                  />
-                  <img
-                    className="h-16 w-16 object-cover"
-                    src={`${apiURL}/uploads/products/${editformData.pImages[1]}`}
-                    alt="productImage"
-                  />
-                </div>
-              ) : (
-                ""
-              )}
-              <span className="text-gray-600 text-xs">Must need 2 images</span>
+              <label htmlFor="image">Product Image*</label>
+              <div className="flex space-x-1">
               <input
-                onChange={(e) =>
-                  setEditformdata({
-                    ...editformData,
-                    error: false,
-                    success: false,
-                    pEditImages: [...e.target.files],
-                  })
-                }
+                onChange={handleEditImage}
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 className="px-4 py-2 border focus:outline-none"
                 id="image"
                 multiple
               />
+                <img
+                  className="h-16 w-16 object-cover"
+                  src={editformData.pImage}
+                  alt="productImage"
+                />
+              </div>
             </div>
             {/* Most Important part for uploading multiple image */}
             <div className="flex space-x-1 py-4">

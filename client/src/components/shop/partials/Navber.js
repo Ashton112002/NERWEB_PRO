@@ -352,7 +352,7 @@ const Navber = props => {
                       <Fragment>
                         <li className="flex flex-col text-gray-700 w-48 shadow-lg">
                           <span
-                            onClick={e => history.push('/admin/dashboard')}
+                            onClick={e => {history.push('/admin/dashboard'); localStorage.setItem("Image", user.User.userImage);}}
                             className="flex space-x-2 py-2 px-8 hover:bg-gray-400 cursor-pointer">
                             <span>
                               <svg

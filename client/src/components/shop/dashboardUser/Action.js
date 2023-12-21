@@ -9,6 +9,7 @@ export const logout = () => {
   localStorage.removeItem('jwt');
   localStorage.removeItem('cart');
   localStorage.removeItem('wishList');
+  localStorage.clear();
   window.location.href = '/';
 };
 
