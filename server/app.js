@@ -65,7 +65,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      'https://nanayestrella.netlify.app/'
+      'https://nanayestrella.netlify.app'
     ],
     method: ['POST', 'GET'],
     credentials: true
