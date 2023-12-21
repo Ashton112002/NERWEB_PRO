@@ -65,9 +65,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      'https://nanayestrella.netlify.app/',
-      'http://localhost:3000',
-      '*'
+      'https://nanayestrella.netlify.app/'
     ],
     method: ['POST', 'GET'],
     credentials: true
@@ -103,7 +101,8 @@ const server = app.listen(PORT, () => {
 
 const io = socketIO(server, {
   cors: {
-    origin: 'http://localhost:3000'
+    origin: 
+    'http://localhost:3000'
   },
   pingTimeout: 60 * 1000
 });
