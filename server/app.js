@@ -66,7 +66,8 @@ app.use(
   cors({
     origin: [
       'https://nanayestrella.netlify.app/',
-      'http://localhost:3000'
+      'http://localhost:3000',
+      '*'
     ],
     method: ['POST', 'GET'],
     credentials: true
